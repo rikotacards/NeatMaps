@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import RecentlySaved from './RecentlySaved.jsx';
 
 class MapCSVForm extends React.Component{
   constructor(props){
@@ -40,22 +41,27 @@ class MapCSVForm extends React.Component{
 
   render(){
     return(
-      <div>
+      <span>
         <p>Assign column mapping</p>
-        <form name = 'mapForm' onSubmit = {this.handleSubmit}>
+        <form  name = 'mapForm' onSubmit = {this.handleSubmit}>
+        <div className ='headermap'>
           {this.state.options.map((i,index) =>
-            <span key = {index}>
+            <div className ={'label column' + (index+1) } key = {index}>
               column {index +1}
-              <div>
-                <select name = {index}>
+              <div className = {' select selector'+(index+1)}>
+                <select  name = {index}>
                     {this.state.options.map((i,index)=>
                       <option key = {index} value = {i}>{i}</option>)}
                 </select>
               </div>
-            </span>)}
+            </div>)}
+            </div>
             <button type = 'submit'>Confirm mapping</button>
+
         </form>
-      </div>
+        <p> Display data on map</p>
+        <RecentlySaved/>
+      </span>
     )
   }
 }
