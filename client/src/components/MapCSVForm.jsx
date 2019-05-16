@@ -31,7 +31,7 @@ class MapCSVForm extends React.Component{
       data:data
     })
     .then((res)=> {
-      console.log(res.data)
+      console.log('from end MAP button', res.data)
 
       this.setState({
         data: [...this.state.data, ...[res.data]]
