@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import MapCSVForm from './MapCSVForm.jsx';
 
 
 class App extends React.Component{
@@ -46,7 +47,7 @@ class App extends React.Component{
           <input type='file' onChange = {this.handleFile}></input>
           <button type = 'submit'>upload</button>
         </form>
-
+        <MapCSVForm/>
       </div>
     )
   }
