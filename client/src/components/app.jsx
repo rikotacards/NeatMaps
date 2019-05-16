@@ -9,6 +9,7 @@ class App extends React.Component{
     this.state = {
       uploadStatus: false,
       file: null,
+      filePath:null,
     }
     this.handleFile = this.handleFile.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,7 +36,9 @@ class App extends React.Component{
       method:'post',
       data: data
     })
-    .then((res)=>console.log(res))
+    .then((res)=>this.setState({
+      filePath:res.data
+    }))
 
   }
 
@@ -47,7 +50,7 @@ class App extends React.Component{
           <input type='file' onChange = {this.handleFile}></input>
           <button type = 'submit'>upload</button>
         </form>
-        <MapCSVForm/>
+        <MapCSVForm filePath = {this.state.filePath}/>
       </div>
     )
   }
