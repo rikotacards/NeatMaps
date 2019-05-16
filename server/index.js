@@ -4,6 +4,8 @@ var path = require('path');
 var bodyParser = require('body-parser')
 var port = 3000;
 
+app.use(express.static(path.join(__dirname, '../client/dist')))
+
 
 app.listen(port,(err,result) => {
   if(err){

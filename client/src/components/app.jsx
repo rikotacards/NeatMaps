@@ -7,6 +7,11 @@ class App extends React.Component{
   render(){
     return(
       <div>
+        <p>upload your csv file</p>
+        <form>
+          <input type='file'></input>
+          <button type = 'submit'>upload</button>
+        </form>
 
       </div>
     )
