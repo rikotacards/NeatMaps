@@ -11,15 +11,40 @@ class MapCSVForm extends React.Component{
         'STATE',
         'ZIPCODE',
         'CATEGORY'
-      ]
+      ],
+      headerData:null,
+      data:[],
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
+
+  handleSubmit(e){
+    e.preventDefault();
+    var form = e.target;
+    var data = new FormData(form)
+    data.append('file',this.props.filePath)
+
+    axios({
+      url:'/mapdata',
+      method:'post',
+      data:data
+    })
+    .then((res)=> {
+      console.log(res.data)
+
+      this.setState({
+        data: [...this.state.data, ...[res.data]]
+      },()=>console.log(this.state.data))
+    })
+  }
+
   render(){
     return(
       <div>
-        <form name = 'mapForm'>
+        <p>Assign column mapping</p>
+        <form name = 'mapForm' onSubmit = {this.handleSubmit}>
           {this.state.options.map((i,index) =>
-            <div key = {index}>
+            <span key = {index}>
               column {index +1}
               <div>
                 <select name = {index}>
@@ -27,7 +52,8 @@ class MapCSVForm extends React.Component{
                       <option key = {index} value = {i}>{i}</option>)}
                 </select>
               </div>
-            </div>)}
+            </span>)}
+            <button type = 'submit'>Confirm mapping</button>
         </form>
       </div>
     )
