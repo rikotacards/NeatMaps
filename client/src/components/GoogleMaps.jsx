@@ -1,6 +1,7 @@
 import GoogleMapReact from 'google-map-react';
 import React from 'react'
 import API_KEY from '../../../GoogleMaps.config.js'
+import MarkerList from './MarkerList.jsx'
 
 class GoogleMaps extends React.Component{
   constructor(props){

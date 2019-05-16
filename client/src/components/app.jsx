@@ -52,7 +52,7 @@ class App extends React.Component{
           <button type = 'submit'>upload</button>
         </form>
         <MapCSVForm filePath = {this.state.filePath}/>
-        <GoogleMaps/>
+        {/* <GoogleMaps/> */}
       </div>
     )
   }

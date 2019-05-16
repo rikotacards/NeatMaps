@@ -6,6 +6,7 @@ var port = 3000;
 var multer = require('multer')
 var upload = multer({dest:'temp/csv/'})
 var process = require('./ProcessData.js')
+var Geocoding = require('./Geocoding.js')
 
 app.use(express.static(path.join(__dirname, '../client/dist')))
 app.use(bodyParser.json());
@@ -21,10 +22,14 @@ app.post('/uploadcsv',upload.single('file'), (req,res) => {
 app.post('/mapdata', upload.none(), async(req,res) => {
   try{
     var headerMapping = req.body
+    console.log(headerMapping)
 
     var data = await process.mapHeader(headerMapping, filePath)
+    var dataWithCoordinates = await Geocoding.convertToGeocode(data)
 
-    res.status(200).json(data)
+
+    console.log(dataWithCoordinates)
+    res.status(200).json(dataWithCoordinates)
 
 
 
