@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import MapCSVForm from './MapCSVForm.jsx';
+import GoogleMaps from './GoogleMaps.jsx'
 
 
 class App extends React.Component{
@@ -51,6 +52,7 @@ class App extends React.Component{
           <button type = 'submit'>upload</button>
         </form>
         <MapCSVForm filePath = {this.state.filePath}/>
+        <GoogleMaps/>
       </div>
     )
   }
