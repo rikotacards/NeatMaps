@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 var filePath;
 
 app.post('/uploadcsv',upload.single('file'), (req,res) => {
-  console.log('from upload button', typeof req.file.path)
+  console.log('from upload button',  req.file)
   filePath = req.file.path
   res.status(200).json(filePath)
 })
