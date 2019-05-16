@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import MapCSVForm from './MapCSVForm.jsx';
+import GoogleMaps from './GoogleMaps.jsx'
 
 
 class App extends React.Component{
@@ -8,6 +10,7 @@ class App extends React.Component{
     this.state = {
       uploadStatus: false,
       file: null,
+      filePath:null,
     }
     this.handleFile = this.handleFile.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,7 +37,9 @@ class App extends React.Component{
       method:'post',
       data: data
     })
-    .then((res)=>console.log(res))
+    .then((res)=>this.setState({
+      filePath:res.data
+    }))
 
   }
 
@@ -46,7 +51,8 @@ class App extends React.Component{
           <input type='file' onChange = {this.handleFile}></input>
           <button type = 'submit'>upload</button>
         </form>
-
+        <MapCSVForm filePath = {this.state.filePath}/>
+        <GoogleMaps/>
       </div>
     )
   }
