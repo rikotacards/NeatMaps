@@ -1,12 +1,21 @@
 import React from 'react';
 import Marker from './Marker.jsx'
+//import Marker from 'google-map-react'
 
 var Markerlist = (props) =>{
+  for (var i in props.markers){
+
+  }
   return(
-    <div>
-      {props.markers.map((i,index)=>
-        <Marker lat={i.lat} lng = {i.lng} text = {i.text} key = {index}/>)}
-    </div>
+      props.markers.map((i,index)=>
+        <Marker
+          // position = {{lat:i.coordinates.lat, lng:i.coordinates.lng}}
+          lat={i.coordinates.lat}
+          lng = {i.coordinates.lng}
+          text = {i.CATEGORY}
+          key = {index}
+        />)
+
   )
 }
 
