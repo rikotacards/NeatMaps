@@ -10,7 +10,8 @@ class App extends React.Component{
     this.state = {
       fileSelected: false,
       fileUploaded:false,
-      fileName:null,
+      uploadComplete:false,
+      fileName:[],
       file: null,
       filePath:null,
     }
@@ -26,7 +27,7 @@ class App extends React.Component{
     this.setState({
       file: uploadedFile,
       fileSelected: true
-    })
+    },()=>console.log(uploadedFile))
   }
 
   handleSubmit(e){
@@ -41,20 +42,37 @@ class App extends React.Component{
       data: data
     })
     .then((res)=>this.setState({
-      fileName:res.data,
-      fileUploaded: true
-    }))
+      fileName:[...this.state.fileName,...[res.data]],
+      fileUploaded: true,
+      uploadComplete:!this.state.uploadComplete,
+      fileSelected:!this.state.fileSelected
+    },()=>console.log(this.state.fileName)))
+    .then(()=>{
+      if(this.state.fileName.length>3){
+        var newstate = this.state.fileName;
+        newstate.shift()
+        this.setState({
+          fileName: newstate
+        })
+      }
+    })
+
 
   }
 
   render(){
+
+
     return(
       <div>
         <p>upload your csv file</p>
-        <form name ='csvFileForm' onSubmit = {this.handleSubmit}>
+        <form id = 'uploadCSV' name ='csvFileForm' onSubmit = {this.handleSubmit}>
           <input type='file' onChange = {this.handleFile}></input>
-          <button disabled = {!this.state.fileSelected} type = 'submit'>upload</button>
+          <div>
+          <button disabled = {!this.state.fileSelected} type = 'submit'>{this.state.uploadComplete? 'done':'upload'}</button>
+          </div>
         </form>
+
         <MapCSVForm
           uploadStatus = {this.state.fileUploaded}
           fileName = {this.state.fileName}

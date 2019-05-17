@@ -1,12 +1,16 @@
+p {
+  font-family: Helvetica;
+}
+
 .headermap {
   display: grid;
+  grid-template-columns:15% 15% 15% 15% 15%;
 }
 
 .label{
   grid-row-start: 1;
   grid-row-end:2;
 }
-
 
 .column1 {
   grid-column-start: 1;
@@ -31,4 +35,15 @@
 .column5 {
   grid-column-start: 5;
   grid-column-end: 6;
+}
+
+.confirmMapping{
+  grid-column-start:6;
+  grid-column-end:7;
+  grid-row-start: 2;
+  grid-row-end:3;
+}
+
+.displayButton {
+  margin-right:10px;
 }

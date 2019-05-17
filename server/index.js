@@ -25,7 +25,7 @@ app.post('/mapdata', upload.none(), async(req,res) => {
   try{
     var headerMapping = req.body
     console.log(headerMapping)
-
+    console.log('server filepath', filePath)
     var data = await process.mapHeader(headerMapping, filePath)
     var dataWithCoordinates = await Geocoding.convertToGeocode(data)
 

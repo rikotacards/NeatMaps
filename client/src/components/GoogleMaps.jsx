@@ -10,17 +10,23 @@ class GoogleMaps extends React.Component{
     super(props)
   }
   render(){
-    console.log('props', this.props.locationData)
-    var defaultPosition = this.props.locationData[0].coordinates
+    // console.log('props', this.props.locationData)
+    var defaultPosition = {lat:40, lng:-122}
+    if(this.props.locationData){
+      console.log(this.props.locationData)
+      defaultPosition = this.props.locationData[0].coordinates
+    }
+
+
 
     return(
-        <div style= {{height:'100vh', width:'80%'}}>
+        <div style= {{height:'70vh', width:'80%'}}>
             <GoogleMapReact
             bootstrapURLKeys = {{key:API_KEY.key}}
-            defaultCenter = {defaultPosition}
+            center = {defaultPosition}
             defaultZoom={11}
             >
-            {this.props.locationData.map((places,index)=>             <Marker
+            {this.props.locationData && this.props.locationData.map((places,index)=>             <Marker
             key = {index}
             colorCode = {places.colorcode}
             lat = {places.coordinates.lat}
