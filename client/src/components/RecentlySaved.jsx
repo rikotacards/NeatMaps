@@ -7,7 +7,9 @@ class RecentlySaved extends React.Component{
   render(){
     return(
       <div>
-        <button>data set 1</button>
+        <button disabled = {!this.props.mapConfirmed}>
+          {this.props.fileName}
+        </button>
       </div>
     )
   }

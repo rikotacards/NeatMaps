@@ -10,6 +10,7 @@ class App extends React.Component{
     this.state = {
       fileSelected: false,
       fileUploaded:false,
+      fileName:null,
       file: null,
       filePath:null,
     }
@@ -40,7 +41,7 @@ class App extends React.Component{
       data: data
     })
     .then((res)=>this.setState({
-      filePath:res.data,
+      fileName:res.data,
       fileUploaded: true
     }))
 
@@ -55,7 +56,9 @@ class App extends React.Component{
           <button disabled = {!this.state.fileSelected} type = 'submit'>upload</button>
         </form>
         <MapCSVForm
-          uploadStatus = {this.state.fileUploaded}filePath = {this.state.filePath}/>
+          uploadStatus = {this.state.fileUploaded}
+          fileName = {this.state.fileName}
+          />
       </div>
     )
   }

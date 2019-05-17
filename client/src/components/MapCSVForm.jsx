@@ -19,6 +19,7 @@ class MapCSVForm extends React.Component{
       ],
       headerData:null,
       data:[],
+      mapConfirmed:false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -38,10 +39,15 @@ class MapCSVForm extends React.Component{
       console.log('from end MAP button', res.data)
 
       this.setState({
-        data: [...this.state.data, ...[res.data]]
+        data: [...this.state.data, ...[res.data]],
+        mapConfirmed:true
       },()=>console.log(this.state.data))
     })
+    .catch((error) =>{
+      console.log(error)
+    })
   }
+
 
   render(){
     console.log(this.props.uploadStatus)
@@ -65,7 +71,10 @@ class MapCSVForm extends React.Component{
 
         </form>
         <p> Display data on map</p>
-        <RecentlySaved/>
+        <RecentlySaved
+          fileName = {this.props.fileName}
+          mapConfirmed = {this.state.mapConfirmed}
+          />
         <GoogleMaps locationData = {ProcessedData.dataFromCSV1}/>
       </span>
     )

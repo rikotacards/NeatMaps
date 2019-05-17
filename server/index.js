@@ -14,9 +14,11 @@ app.use(bodyParser.json());
 var filePath;
 
 app.post('/uploadcsv',upload.single('file'), (req,res) => {
-  console.log('from upload button',  req.file)
+  console.log('from upload button',  req.file.originalname)
+  var fileName = req.file.originalname
   filePath = req.file.path
-  res.status(200).json(filePath)
+
+  res.status(200).json(fileName)
 })
 
 app.post('/mapdata', upload.none(), async(req,res) => {
