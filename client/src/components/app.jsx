@@ -17,6 +17,15 @@ class App extends React.Component{
     }
     this.handleFile = this.handleFile.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.resetState = this.resetState.bind(this)
+  }
+
+  resetState(){
+    this.setState({
+      fileSelected: false,
+      fileUploaded:false,
+      uploadComplete:false
+    })
   }
 
   handleFile(e){
@@ -56,6 +65,12 @@ class App extends React.Component{
         })
       }
     })
+    .then(()=>{
+      document.getElementById('mapFormContainer').style.display = 'block'
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
 
 
   }
@@ -65,17 +80,21 @@ class App extends React.Component{
 
     return(
       <div>
+        <div id = 'uploadform' style = {{'display':'none'}}>
         <p>upload your csv file</p>
         <form id = 'uploadCSV' name ='csvFileForm' onSubmit = {this.handleSubmit}>
           <input type='file' onChange = {this.handleFile}></input>
           <div>
+
           <button disabled = {!this.state.fileSelected} type = 'submit'>{this.state.uploadComplete? 'done':'upload'}</button>
           </div>
         </form>
+        </div>
 
         <MapCSVForm
           uploadStatus = {this.state.fileUploaded}
           fileName = {this.state.fileName}
+          resetState = {this.resetState}
           />
       </div>
     )

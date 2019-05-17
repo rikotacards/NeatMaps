@@ -23,6 +23,13 @@ class MapCSVForm extends React.Component{
       loading:false,
     }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.resetMapConfirmed = this.resetMapConfirmed.bind(this)
+  }
+
+  resetMapConfirmed(){
+    this.setState({
+      mapConfirmed:false
+    })
   }
 
   handleSubmit(e){
@@ -56,6 +63,15 @@ class MapCSVForm extends React.Component{
         })
       }
     })
+    .then(()=>{
+      document.getElementById('uploadform').style.display='none'
+
+      document.getElementById('mapFormContainer').style.display = 'none'
+    })
+    .then(()=>{
+      this.props.resetState();
+      this.resetMapConfirmed()
+    })
     .catch((error) =>{
       console.log(error)
     })
@@ -73,7 +89,8 @@ class MapCSVForm extends React.Component{
 
     console.log(this.props.uploadStatus)
     return(
-      <span>
+      <span >
+        <div id ='mapFormContainer' style={{'display':'none'}}>
         <p style={pStyle}>Assign column mapping</p>
         <form  name = 'mapForm' onSubmit = {this.handleSubmit}>
         <div className ='headermap'>
@@ -95,8 +112,8 @@ class MapCSVForm extends React.Component{
 
 
         </form>
-        {this.state.mapConfirmed?(<button onClick = {()=>{document.getElementById('uploadCSV').reset()}}value = 'another'>Add another file</button>):(null)}
-
+        {/* {this.state.mapConfirmed?(<button onClick = {()=>{document.getElementById('uploadCSV').reset()}}value = 'another'>Add another file</button>):(null)} */}
+        </div>
 
         <p> Display data on map</p>
 
@@ -104,6 +121,8 @@ class MapCSVForm extends React.Component{
           fileName = {this.props.fileName}
           mapConfirmed = {this.state.mapConfirmed}
           locationData = {this.state.data}
+          resetState = {this.props.resetState}
+          resetMapConfirmed = {this.resetMapConfirmed}
         />
 
 

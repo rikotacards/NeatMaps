@@ -28,11 +28,22 @@ class RecentlySaved extends React.Component{
              <span className = 'displayButton' key = {index}>
              <button
               onClick = {this.handleClick}
-              id = {index} disabled = {!this.props.mapConfirmed}>
+              id = {index} >
                 {this.props.fileName[index]}
              </button>
            </span>
           )}
+          <button onClick = {()=>
+            {document.getElementById('uploadform').style.display = 'block'
+            document.getElementById('uploadCSV').reset()
+
+
+
+
+          }
+            }>
+              +
+          </button>
           <div>
           <GoogleMaps
           locationData = {this.state.dataToMap}
