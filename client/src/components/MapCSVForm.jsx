@@ -1,6 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import RecentlySaved from './RecentlySaved.jsx';
+import GoogleMaps from './GoogleMaps.jsx';
+import ProcessedData from '../../../ProcessedDataCSV1';
+
+//location data is taken processed data in ProcessedDataCSV1.js to prevent recurring API requests (which will increase in cost)
 
 class MapCSVForm extends React.Component{
   constructor(props){
@@ -40,6 +44,7 @@ class MapCSVForm extends React.Component{
   }
 
   render(){
+    console.log(this.props.uploadStatus)
     return(
       <span>
         <p>Assign column mapping</p>
@@ -49,7 +54,7 @@ class MapCSVForm extends React.Component{
             <div className ={'label column' + (index+1) } key = {index}>
               column {index +1}
               <div className = {' select selector'+(index+1)}>
-                <select  name = {index}>
+                <select  disabled = {!this.props.uploadStatus}name = {index}>
                     {this.state.options.map((i,index)=>
                       <option key = {index} value = {i}>{i}</option>)}
                 </select>
@@ -61,6 +66,7 @@ class MapCSVForm extends React.Component{
         </form>
         <p> Display data on map</p>
         <RecentlySaved/>
+        <GoogleMaps locationData = {ProcessedData.dataFromCSV1}/>
       </span>
     )
   }
