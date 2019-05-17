@@ -8,7 +8,8 @@ class App extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      uploadStatus: false,
+      fileSelected: false,
+      fileUploaded:false,
       file: null,
       filePath:null,
     }
@@ -22,7 +23,8 @@ class App extends React.Component{
     console.log(uploadedFile)
 
     this.setState({
-      file: uploadedFile
+      file: uploadedFile,
+      fileSelected: true
     })
   }
 
@@ -38,7 +40,8 @@ class App extends React.Component{
       data: data
     })
     .then((res)=>this.setState({
-      filePath:res.data
+      filePath:res.data,
+      fileUploaded: true
     }))
 
   }
@@ -49,10 +52,10 @@ class App extends React.Component{
         <p>upload your csv file</p>
         <form name ='csvFileForm' onSubmit = {this.handleSubmit}>
           <input type='file' onChange = {this.handleFile}></input>
-          <button type = 'submit'>upload</button>
+          <button disabled = {!this.state.fileSelected} type = 'submit'>upload</button>
         </form>
-        <MapCSVForm filePath = {this.state.filePath}/>
-        {/* <GoogleMaps/> */}
+        <MapCSVForm
+          uploadStatus = {this.state.fileUploaded}filePath = {this.state.filePath}/>
       </div>
     )
   }
