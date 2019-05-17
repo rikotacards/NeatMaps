@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import RecentlySaved from './RecentlySaved.jsx';
-import GoogleMaps from './GoogleMaps.jsx';
 import ProcessedData from '../../../ProcessedDataCSV1';
 
 //location data is taken processed data in ProcessedDataCSV1.js to prevent recurring API requests (which will increase in cost)
@@ -19,9 +18,18 @@ class MapCSVForm extends React.Component{
       ],
       headerData:null,
       data:[],
-      mapConfirmed:false
+      // ProcessedData.dataFromCSV1,
+      mapConfirmed:false,
+      loading:false,
     }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.resetMapConfirmed = this.resetMapConfirmed.bind(this)
+  }
+
+  resetMapConfirmed(){
+    this.setState({
+      mapConfirmed:false
+    })
   }
 
   handleSubmit(e){
@@ -30,18 +38,39 @@ class MapCSVForm extends React.Component{
     var data = new FormData(form)
     data.append('file',this.props.filePath)
 
+    this.setState({
+      loading:true
+    })
+
     axios({
       url:'/mapdata',
       method:'post',
       data:data
     })
     .then((res)=> {
-      console.log('from end MAP button', res.data)
-
       this.setState({
         data: [...this.state.data, ...[res.data]],
-        mapConfirmed:true
-      },()=>console.log(this.state.data))
+        mapConfirmed:true,
+        loading:false
+      })
+    })
+    .then(()=>{
+      if(this.state.data.length>3){
+        var newstate = this.state.data;
+        newstate.shift()
+        this.setState({
+          data: newstate
+        })
+      }
+    })
+    .then(()=>{
+      document.getElementById('uploadform').style.display='none'
+
+      document.getElementById('mapFormContainer').style.display = 'none'
+    })
+    .then(()=>{
+      this.props.resetState();
+      this.resetMapConfirmed()
     })
     .catch((error) =>{
       console.log(error)
@@ -50,14 +79,23 @@ class MapCSVForm extends React.Component{
 
 
   render(){
+
+
+
+    var pStyle = {color:'lightgray'}
+    if(this.props.uploadStatus){
+      pStyle = {color:'black'}
+    }
+
     console.log(this.props.uploadStatus)
     return(
-      <span>
-        <p>Assign column mapping</p>
+      <span >
+        <div id ='mapFormContainer' style={{'display':'none'}}>
+        <p style={pStyle}>Assign column mapping</p>
         <form  name = 'mapForm' onSubmit = {this.handleSubmit}>
         <div className ='headermap'>
           {this.state.options.map((i,index) =>
-            <div className ={'label column' + (index+1) } key = {index}>
+            <div style = {pStyle} className ={'label column' + (index+1) } key = {index}>
               column {index +1}
               <div className = {' select selector'+(index+1)}>
                 <select  disabled = {!this.props.uploadStatus}name = {index}>
@@ -67,15 +105,28 @@ class MapCSVForm extends React.Component{
               </div>
             </div>)}
             </div>
-            <button type = 'submit'>Confirm mapping</button>
+
+            <div>{this.state.loading ? 'loading...' : null }</div>
+
+            <button className = 'confirmMapping' disabled ={!this.props.uploadStatus === !this.state.mapConfirmed} type = 'submit'>{this.state.mapConfirmed ? 'done' : 'Confirm mapping'}</button>
+
 
         </form>
+        {/* {this.state.mapConfirmed?(<button onClick = {()=>{document.getElementById('uploadCSV').reset()}}value = 'another'>Add another file</button>):(null)} */}
+        </div>
+
         <p> Display data on map</p>
+
         <RecentlySaved
           fileName = {this.props.fileName}
           mapConfirmed = {this.state.mapConfirmed}
-          />
-        <GoogleMaps locationData = {ProcessedData.dataFromCSV1}/>
+          locationData = {this.state.data}
+          resetState = {this.props.resetState}
+          resetMapConfirmed = {this.resetMapConfirmed}
+        />
+
+
+
       </span>
     )
   }
