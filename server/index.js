@@ -8,8 +8,15 @@ var upload = multer({dest:'temp/csv/'})
 var process = require('./ProcessData.js')
 var Geocoding = require('./Geocoding.js')
 
-app.use(express.static(path.join(__dirname, '../client/dist')))
+app.use(express.static(path.join(__dirname, './../client/dist')))
+
 app.use(bodyParser.json());
+
+
+
+app.get('*', (req,res)=>{
+  res.sendFile(path.join(__dirname,'../client/dist/' ))
+})
 
 var filePath;
 
