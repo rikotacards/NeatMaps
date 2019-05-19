@@ -1,7 +1,6 @@
 //Converts CSV file to JSON file with user defined column mapping
+var csv = require('csvtojson')
 
-var csv = require('csvtojson');
-var path = require('path')
 
 var mapHeader = async (header, file) =>{
   try{
@@ -21,11 +20,6 @@ var mapHeader = async (header, file) =>{
     console.log(err)
   }
 }
-
-
-
-
-
 
 
 module.exports ={
