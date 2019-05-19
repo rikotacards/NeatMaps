@@ -6,8 +6,8 @@ var bodyParser = require('body-parser')
 var port = 3000;
 var multer = require('multer')
 var upload = multer({dest:'temp/csv/'})
-var process = require('./ProcessData.js')
-var Geocoding = require('./Geocoding.js')
+var process = require('../DataProcessing/ProcessCSV.js')
+var Geocoding = require('../DataProcessing/GeocodeService')
 var auth = require('./Auth.js')
 
 app.use(express.static(path.join(__dirname, './../client/dist')))
