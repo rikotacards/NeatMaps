@@ -1,9 +1,12 @@
 var axios = require('axios')
 
 
-
 var auth = async(email, password) => {
   try{
+
+    if(!email || !password){
+      return false
+    }
 
     var path = "http://neat-mvp-api.herokuapp.com/v1/auth"
 
@@ -11,14 +14,13 @@ var auth = async(email, password) => {
       url: path,
       method:'POST',
       data:`email=${email}&password=${password}`})
-      console.log(result)
-      return result
 
+      return result.data
   } catch(error){
-      console.log('unsucesful')
+
+    return error
   }
 }
-
 
 module.exports = {
   auth:auth
