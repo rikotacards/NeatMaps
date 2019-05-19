@@ -2,7 +2,7 @@
   "name": "neatmaps",
   "version": "1.0.0",
   "description": "Neat Maps",
-  "main": "webpack.config.js",
+  "main": "client/src/index.jsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack -d --watch",
