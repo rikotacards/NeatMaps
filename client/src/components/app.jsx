@@ -1,7 +1,7 @@
 import React from 'react';
 import UploadForm from './UploadForm.jsx'
 import {BrowserRouter} from 'react-router-dom';
-import AuthWrapper from './Login.jsx'
+import AuthWrapper from './AuthWrapper.jsx'
 
 
 class App extends React.Component{
