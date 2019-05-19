@@ -8,14 +8,11 @@ var multer = require('multer')
 var upload = multer({dest:'temp/csv/'})
 var process = require('./ProcessData.js')
 var Geocoding = require('./Geocoding.js')
-
-var auth = require('./auth.js')
+var auth = require('./Auth.js')
 
 app.use(express.static(path.join(__dirname, './../client/dist')))
 app.use(cors())
 app.use(bodyParser.json());
-
-
 
 app.get('*', (req,res)=>{
   res.sendFile(path.join(__dirname,'../client/dist/' ))
@@ -24,7 +21,7 @@ app.get('*', (req,res)=>{
 var filePath;
 
 app.post('/uploadcsv',upload.single('file'), (req,res) => {
-  console.log('from upload button',  req.file.originalname)
+
   var fileName = req.file.originalname
   filePath = req.file.path
 
@@ -33,8 +30,8 @@ app.post('/uploadcsv',upload.single('file'), (req,res) => {
 
 app.post('/mapdata', upload.none(), async(req,res) => {
   try{
-    var headerMapping = req.body
 
+    var headerMapping = req.body
     var data = await process.mapHeader(headerMapping, filePath)
     var dataWithCoordinates = await Geocoding.convertToGeocode(data)
 
@@ -46,9 +43,22 @@ app.post('/mapdata', upload.none(), async(req,res) => {
 })
 
 app.post('/authenticate',async(req,res) =>{
-  var email = req.body.email
-  var password = req.body.password
-  console.log('here', await auth.auth(email,password))
+
+  try {
+
+    var email = req.body.email
+    var password = req.body.password
+    var result =  await auth.auth(email,password)
+
+    if(!result){
+      res.status(401).json(error)
+    } else {
+      res.status(200).json(result)
+    }
+
+  } catch (error) {
+    res.status(401).json(error)
+  }
 })
 
 app.listen(port,(err,result) => {
