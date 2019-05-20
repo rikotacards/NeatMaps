@@ -37,7 +37,7 @@ class RecentlySaved extends React.Component{
       <div>
         {this.props.locationData.map((i,index)=>
              <span className = 'displayButton' key = {index}>
-             <button
+             <button className = 'marker-controller-btn'
               onClick = {this.handleClick}
               id = {index} >
                 {this.props.fileName[index]}
@@ -47,6 +47,7 @@ class RecentlySaved extends React.Component{
           <button className = 'addData' onClick = {()=>
             {document.getElementById('uploadform').style.display = 'block'
             document.getElementById('uploadCSV').reset()
+            document.getElementById('col-map-form').reset()
           }
             }>
               +

@@ -97,3 +97,65 @@ p {
   color:red;
 }
 
+/* Stlyingin app page */
+.app-welcome{
+  color:white;
+  height:60px;
+  line-height:60px;
+  font-size:30px;
+  background:#21679B;
+  padding-left: 30px;
+}
+.app-contents{
+  padding:30px;
+}
+.addData{
+  border: 0px solid grey;
+    background: lightgrey;
+    font-weight: bold;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+.addData:hover{
+    background: darkgrey;
+}
+.csvUploadBtn{
+  border: 0px solid grey;
+  background: lightgrey;
+  margin-bottom: 15px;
+}
+.csvUploadBtn:hover{
+  background: darkgrey;
+
+}
+select{
+  border-radius: 0px;
+  border: 1px solid lightgrey;
+  background: lightgrey;
+  padding: 5px;
+  height: 30px;
+}
+.select:focus{
+  outline:none;
+}
+.confirmMapping{
+  border: 0px solid grey;
+  background: lightgrey;
+  margin-bottom: 15px;
+}
+.confirmMapping:hover{
+  background: darkgrey;
+}
+
+.marker-controller-btn{
+  border: 0px solid grey;
+  background: lightgrey;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+.marker-controller-btn:focus{
+  background:grey;
+  outline:none
+}
+

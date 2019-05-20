@@ -81,9 +81,9 @@ class UploadForm extends React.Component{
 
 
     return(
-      <div>
+      <div className = 'app-contents'>
         <div id = 'uploadform' style = {{'display':'none'}}>
-        <p>upload your csv file</p>
+        <p>Upload your csv file</p>
         <form id = 'uploadCSV' name ='csvFileForm' onSubmit = {this.handleSubmit}>
           <input className = 'csvUpload' accept = ".csv" type='file' onChange = {this.handleFile}></input>
           <div>

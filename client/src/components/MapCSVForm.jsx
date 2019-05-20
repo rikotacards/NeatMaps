@@ -80,8 +80,6 @@ class MapCSVForm extends React.Component{
 
   render(){
 
-
-
     var pStyle = {color:'lightgray'}
     if(this.props.uploadStatus){
       pStyle = {color:'black'}
@@ -91,7 +89,7 @@ class MapCSVForm extends React.Component{
       <span >
         <div id ='mapFormContainer' style={{'display':'none'}}>
         <p style={pStyle}>Assign column mapping</p>
-        <form  name = 'mapForm' onSubmit = {this.handleSubmit}>
+        <form  id = 'col-map-form' name = 'mapForm' onSubmit = {this.handleSubmit}>
         <div className ='headermap'>
           {this.state.options.map((i,index) =>
             <div style = {pStyle} className ={'label column' + (index+1) } key = {index}>
@@ -113,7 +111,7 @@ class MapCSVForm extends React.Component{
         </form>
         </div>
 
-        <p> Display data on map</p>
+        <p> Add data to map</p>
 
         <RecentlySaved
           fileName = {this.props.fileName}

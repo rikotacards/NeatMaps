@@ -38,6 +38,7 @@ class Login extends React.Component{
       })
       return
     }
+    //toggle on loading display
     this.setState({
       processing:true
     })
@@ -73,8 +74,8 @@ class Login extends React.Component{
   render(){
     if(this.state.authenticate){
       return(
-        <div>
-          Welcome {this.state.email}
+        <div className = 'app-wraper'>
+          <div className = 'app-welcome'>Welcome {this.state.email}</div>
           <UploadForm/>
         </div>
       )
