@@ -7,10 +7,12 @@
     "test": "jest",
     "build": "webpack -d --watch",
     "start": "nodemon server/index.js"
-
   },
   "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/setupTest.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/setupTest.js",
+      "./node_modules/jest-enzyme/lib/index.js"
+    ],
     "verbose": true
   },
   "repository": {
@@ -37,6 +39,7 @@
     "express": "^4.16.4",
     "fast-csv": "^2.5.0",
     "google-map-react": "^1.1.4",
+    "jest-enzyme": "^7.0.2",
     "multer": "^1.4.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

@@ -25,14 +25,14 @@ class Login extends React.Component{
   }
 
   authenticate(e){
-    console.log('clicked')
+
     var email = this.state.email
     var password = this.state.password
 
     e.preventDefault()
 
     if(!email || !password){
-      console.log('hit')
+
       this.setState({
         successfulLogin:false
       })
