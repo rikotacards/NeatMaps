@@ -33,7 +33,7 @@ class RecentlySaved extends React.Component{
              </button>
            </span>
           )}
-          <button onClick = {()=>
+          <button className = 'addData' onClick = {()=>
             {document.getElementById('uploadform').style.display = 'block'
             document.getElementById('uploadCSV').reset()
 

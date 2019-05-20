@@ -4,9 +4,6 @@ var axios = require('axios')
 var auth = async(email, password) => {
   try{
 
-    if(!email || !password){
-      return false
-    }
 
     var path = "http://neat-mvp-api.herokuapp.com/v1/auth"
 

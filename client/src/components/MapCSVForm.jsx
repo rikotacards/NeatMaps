@@ -87,7 +87,6 @@ class MapCSVForm extends React.Component{
       pStyle = {color:'black'}
     }
 
-    console.log(this.props.uploadStatus)
     return(
       <span >
         <div id ='mapFormContainer' style={{'display':'none'}}>
@@ -112,7 +111,6 @@ class MapCSVForm extends React.Component{
 
 
         </form>
-        {/* {this.state.mapConfirmed?(<button onClick = {()=>{document.getElementById('uploadCSV').reset()}}value = 'another'>Add another file</button>):(null)} */}
         </div>
 
         <p> Display data on map</p>

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import MapCSVForm from './MapCSVForm.jsx';
+import { EventEmitter } from 'events';
 
 
 
@@ -29,21 +30,22 @@ class UploadForm extends React.Component{
   }
 
   handleFile(e){
-    e.preventDefault();
+    // e.preventDefault();
     var uploadedFile = e.target.files[0]
-    console.log(uploadedFile)
+
 
     this.setState({
       file: uploadedFile,
       fileSelected: true
-    },()=>console.log(uploadedFile))
+    })
   }
 
   handleSubmit(e){
-    e.preventDefault();
+     e.preventDefault();
     var file = this.state.file
     var data = new FormData()
     data.append('file', file)
+
 
     axios({
       url:'/uploadcsv',
@@ -83,10 +85,10 @@ class UploadForm extends React.Component{
         <div id = 'uploadform' style = {{'display':'none'}}>
         <p>upload your csv file</p>
         <form id = 'uploadCSV' name ='csvFileForm' onSubmit = {this.handleSubmit}>
-          <input type='file' onChange = {this.handleFile}></input>
+          <input className = 'csvUpload' accept = ".csv" type='file' onChange = {this.handleFile}></input>
           <div>
 
-          <button disabled = {!this.state.fileSelected} type = 'submit'>{this.state.uploadComplete? 'done':'upload'}</button>
+          <button className = 'csvUploadBtn' disabled = {!this.state.fileSelected} type = 'submit'>{this.state.uploadComplete? 'done':'upload'}</button>
           </div>
         </form>
         </div>

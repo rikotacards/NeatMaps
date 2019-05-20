@@ -1,22 +1,8 @@
-import React,{ Component } from 'react';
+import React from 'react';
 import axios from 'axios';
 import UploadForm from './UploadForm.jsx'
-import {
-  BrowserRouter as Router,
-  Route,
-} from "react-router-dom";
 
-var AuthWrapper = () => {
-  return (
-    <Router>
-      <div>
-        <Route path="/" component={Login} />
-      </div>
-    </Router>
-  );
-}
-
-class Login extends Component{
+class Login extends React.Component{
   constructor(props){
     super(props)
     this.state = {
@@ -44,6 +30,15 @@ class Login extends Component{
     var password = this.state.password
 
     e.preventDefault()
+
+    if(!email || !password){
+
+      this.setState({
+        successfulLogin:false
+      })
+      return
+    }
+
     axios({
       url:'/authenticate',
       method:'post',
@@ -85,17 +80,17 @@ class Login extends Component{
         <div>
           <form id = 'login' name = 'login' onSubmit = {this.authenticate}>
             <div>
-              <input onChange = {this.handleChange}name = 'email'type = 'text'></input>
+              <input onChange = {this.handleChange} name = 'email'type = 'text'></input>
             </div>
             <div>
-              <input onChange = {this.handleChange} name = 'password' type = 'password'>
+              <input className = 'passwordInput' onChange = {this.handleChange} name = 'password' type = 'password'>
               </input>
             </div>
-            <div>
+            <div className = 'loginStatus'>
               {this.state.successfulLogin ? (
              null ) : 'Incorrect username or password. Please try again.'}
             </div>
-            <button type = 'submit'>
+            <button className = 'loginBtn' type = 'submit'>
               Sign in
             </button>
           </form>
@@ -104,5 +99,4 @@ class Login extends Component{
     }
   }
 }
-
-export default AuthWrapper
+export default Login
