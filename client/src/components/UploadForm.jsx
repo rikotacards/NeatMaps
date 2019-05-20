@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import MapCSVForm from './MapCSVForm.jsx';
-import { EventEmitter } from 'events';
+
 
 
 
@@ -57,7 +57,7 @@ class UploadForm extends React.Component{
       fileUploaded: true,
       uploadComplete:!this.state.uploadComplete,
       fileSelected:!this.state.fileSelected
-    },()=>console.log(this.state.fileName)))
+    }))
     .then(()=>{
       if(this.state.fileName.length>3){
         var newstate = this.state.fileName;

@@ -52,7 +52,7 @@ class MapCSVForm extends React.Component{
         data: [...this.state.data, ...[res.data]],
         mapConfirmed:true,
         loading:false
-      })
+      },()=>{console.log('from Mapcsv form ', this.state.data)})
     })
     .then(()=>{
       if(this.state.data.length>3){
