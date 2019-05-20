@@ -10,7 +10,8 @@ class Login extends React.Component{
       email: null,
       password: null,
       successfulLogin: true,
-      username: null
+      username: null,
+      processing: false,
     }
     this.authenticate = this.authenticate.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -33,10 +34,13 @@ class Login extends React.Component{
     if(!email || !password){
 
       this.setState({
-        successfulLogin:false
+        successfulLogin:false,
       })
       return
     }
+    this.setState({
+      processing:true
+    })
 
     axios({
       url:'/authenticate',
@@ -53,14 +57,16 @@ class Login extends React.Component{
         })
       } else {
         this.setState({
-          authenticate: !this.state.authenticated
+          authenticate: !this.state.authenticated,
+          processing:false
         })
       }
     })
     .catch((error) => {
       console.log(error)
       this.setState({
-        successfulLogin: false
+        successfulLogin: false,
+        processing:false
       })
     })
   }
@@ -74,17 +80,22 @@ class Login extends React.Component{
       )
     } else {
     return(
-        <div>
+        <div className = 'login-wrapper'>
+          <div className = 'hero-title'> Welcome to Neat Maps</div>
           <form id = 'login' name = 'login' onSubmit = {this.authenticate}>
             <div>
-              <input onChange = {this.handleChange} name = 'email'type = 'text'></input>
+              <input placeholder = 'email' className = 'loginEmail loginInput'onChange = {this.handleChange} name = 'email'type = 'text'></input>
             </div>
             <div>
-              <input className = 'passwordInput' onChange = {this.handleChange} name = 'password' type = 'password'>
+              <input placeholder = 'password' className = 'passwordInput loginInput' onChange = {this.handleChange} name = 'password' type = 'password'>
               </input>
             </div>
+            <div className='login-processing'>
+            {this.state.processing ? (
+             'Logging in. Please wait.' ) : (null)}
+            </div>
             <div className = 'loginStatus'>
-              {this.state.successfulLogin ? (
+            {this.state.successfulLogin ? (
              null ) : 'Incorrect username or password. Please try again.'}
             </div>
             <button className = 'loginBtn' type = 'submit'>
