@@ -5,10 +5,21 @@ class RecentlySaved extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      dataToMap: null,
+      dataToMap:null,
       fileID: null
     }
     this.handleClick = this.handleClick.bind(this)
+  }
+
+  componentDidUpdate(prevProps, prevState){
+
+    if(this.props.locationData !== prevProps.locationData){
+
+      var renderID = this.props.locationData.length-1
+      this.setState({
+        dataToMap: this.props.locationData[renderID]
+      })
+    }
   }
 
   handleClick(e){
@@ -17,7 +28,7 @@ class RecentlySaved extends React.Component{
     this.setState({
       dataToMap:this.props.locationData[e.target.id],
       fileID: e.target.id
-    },()=>console.log(this.state.fileID))
+    })
 
   }
 
@@ -36,10 +47,6 @@ class RecentlySaved extends React.Component{
           <button className = 'addData' onClick = {()=>
             {document.getElementById('uploadform').style.display = 'block'
             document.getElementById('uploadCSV').reset()
-
-
-
-
           }
             }>
               +
@@ -49,12 +56,9 @@ class RecentlySaved extends React.Component{
           locationData = {this.state.dataToMap}
           fileID = {this.state.fileID}
           />
-
           </div>
-
       </div>
     )
-
   }
 }
 

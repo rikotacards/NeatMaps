@@ -25,6 +25,8 @@ app.post('/uploadcsv',upload.single('file'), (req,res) => {
   var fileName = req.file.originalname
   filePath = req.file.path
 
+
+
   res.status(200).json(fileName)
 })
 

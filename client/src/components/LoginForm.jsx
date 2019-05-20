@@ -30,7 +30,6 @@ class Login extends React.Component{
     var password = this.state.password
 
     e.preventDefault()
-
     if(!email || !password){
 
       this.setState({
@@ -65,8 +64,6 @@ class Login extends React.Component{
       })
     })
   }
-
-
   render(){
     if(this.state.authenticate){
       return(
