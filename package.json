@@ -5,8 +5,8 @@
   "main": "client/src/index.js",
   "scripts": {
     "test": "jest",
-    "build": "webpack --watch",
-    "start": "nodemon server/index.js"
+    "build": "webpack",
+    "start": "node server/index.js"
   },
   "jest": {
     "setupFilesAfterEnv": [
