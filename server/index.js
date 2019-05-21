@@ -1,5 +1,3 @@
-// require('dotenv').config({path:__dirname +'/../.env'})
-// console.log(process.env.port)
 var express = require('express');
 var cors = require('cors')
 var app = express();
