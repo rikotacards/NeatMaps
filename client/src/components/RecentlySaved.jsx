@@ -36,28 +36,23 @@ class RecentlySaved extends React.Component{
     return(
       <div>
         {this.props.locationData.map((i,index)=>
-             <span className = 'displayButton' key = {index}>
-             <button className = 'marker-controller-btn'
-              onClick = {this.handleClick}
-              id = {index} >
-                {this.props.fileName[index]}
-             </button>
-           </span>
-          )}
-          <button className = 'addData' onClick = {()=>
-            {document.getElementById('uploadform').style.display = 'block'
-            document.getElementById('uploadCSV').reset()
-            document.getElementById('col-map-form').reset()
-          }
-            }>
-              +
+        <span className='displayButton' key={index}>
+          <button className='marker-controller-btn' onClick={this.handleClick} id={index}>
+            {this.props.fileName[index]}
           </button>
-          <div>
-          <GoogleMaps
-          locationData = {this.state.dataToMap}
-          fileID = {this.state.fileID}
-          />
-          </div>
+        </span>
+        )}
+        <button className='addData' onClick={()=>
+          {document.getElementById('uploadform').style.display = 'block'
+          document.getElementById('uploadCSV').reset()
+          document.getElementById('col-map-form').reset()
+          }
+          }>
+          +
+        </button>
+        <div>
+          <GoogleMaps locationData={this.state.dataToMap} fileID={this.state.fileID} />
+        </div>
       </div>
     )
   }
