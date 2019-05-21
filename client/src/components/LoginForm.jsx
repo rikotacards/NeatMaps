@@ -38,6 +38,7 @@ class Login extends React.Component{
       })
       return
     }
+    //toggle on loading display
     this.setState({
       processing:true
     })
@@ -73,32 +74,34 @@ class Login extends React.Component{
   render(){
     if(this.state.authenticate){
       return(
-        <div>
-          Welcome {this.state.email}
+        <div className = 'app-wraper'>
+          <div className = 'app-welcome'>Welcome {this.state.email}</div>
           <UploadForm/>
         </div>
       )
     } else {
     return(
-        <div className = 'login-wrapper'>
-          <div className = 'hero-title'> Welcome to Neat Maps</div>
-          <form id = 'login' name = 'login' onSubmit = {this.authenticate}>
+        <div className='login-wrapper'>
+          <div className='hero-title'> Welcome to Neat Maps</div>
+          <form id='login' name='login' onSubmit={this.authenticate}>
             <div>
-              <input placeholder = 'email' className = 'loginEmail loginInput'onChange = {this.handleChange} name = 'email'type = 'text'></input>
+              <input placeholder='email' className='loginEmail loginInput' onChange={this.handleChange} name='email'
+                type='text'></input>
             </div>
             <div>
-              <input placeholder = 'password' className = 'passwordInput loginInput' onChange = {this.handleChange} name = 'password' type = 'password'>
+              <input placeholder='password' className='passwordInput loginInput' onChange={this.handleChange}
+                name='password' type='password'>
               </input>
             </div>
             <div className='login-processing'>
-            {this.state.processing ? (
-             'Logging in. Please wait.' ) : (null)}
+              {this.state.processing ? (
+              'Logging in. Please wait.' ) : (null)}
             </div>
-            <div className = 'loginStatus'>
-            {this.state.successfulLogin ? (
-             null ) : 'Incorrect username or password. Please try again.'}
+            <div className='loginStatus'>
+              {this.state.successfulLogin ? (
+              null ) : 'Incorrect username or password. Please try again.'}
             </div>
-            <button className = 'loginBtn' type = 'submit'>
+            <button className='loginBtn' type='submit'>
               Sign in
             </button>
           </form>

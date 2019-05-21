@@ -11,8 +11,6 @@ var Marker = (props) => {
     alignItems: 'center',
     justifyContent: 'center',
     fontSize:'7px',
-
-
   }
   return(
     <div style={divStyle}>

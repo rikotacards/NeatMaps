@@ -15,6 +15,7 @@ class UploadForm extends React.Component{
       fileName:[],
       file: null,
       filePath:null,
+      originalData:null,
     }
     this.handleFile = this.handleFile.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -53,10 +54,11 @@ class UploadForm extends React.Component{
       data: data
     })
     .then((res)=>this.setState({
-      fileName:[...this.state.fileName,...[res.data]],
+      fileName:[...this.state.fileName,...[res.data.fileName]],
       fileUploaded: true,
       uploadComplete:!this.state.uploadComplete,
-      fileSelected:!this.state.fileSelected
+      fileSelected:!this.state.fileSelected,
+      originalData:res.data.originalData
     }))
     .then(()=>{
       if(this.state.fileName.length>3){
@@ -81,9 +83,9 @@ class UploadForm extends React.Component{
 
 
     return(
-      <div>
+      <div className = 'app-contents'>
         <div id = 'uploadform' style = {{'display':'none'}}>
-        <p>upload your csv file</p>
+        <p>Upload your csv file</p>
         <form id = 'uploadCSV' name ='csvFileForm' onSubmit = {this.handleSubmit}>
           <input className = 'csvUpload' accept = ".csv" type='file' onChange = {this.handleFile}></input>
           <div>
@@ -97,6 +99,7 @@ class UploadForm extends React.Component{
           uploadStatus = {this.state.fileUploaded}
           fileName = {this.state.fileName}
           resetState = {this.resetState}
+          originalData = {this.state.originalData}
           />
       </div>
     )
