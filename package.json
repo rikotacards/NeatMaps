@@ -9,7 +9,7 @@
   "scripts": {
     "test": "jest",
     "build": "webpack",
-    "start": "nodemon server/index.js"
+    "start": "node server/index.js"
   },
   "jest": {
     "setupFilesAfterEnv": [
