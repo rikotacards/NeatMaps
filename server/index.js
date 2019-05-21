@@ -20,14 +20,17 @@ app.get('*', (req,res)=>{
 
 var filePath;
 
-app.post('/uploadcsv',upload.single('file'), (req,res) => {
+app.post('/uploadcsv',upload.single('file'), async(req,res) => {
 
   var fileName = req.file.originalname
   filePath = req.file.path
 
+  //new section, trying to create data preview
+  var originalData = await process.returnOriginalData(filePath)
+  var returnObject = {fileName: fileName, originalData: originalData}
 
 
-  res.status(200).json(fileName)
+  res.status(200).json(returnObject)
 })
 
 app.post('/mapdata', upload.none(), async(req,res) => {
