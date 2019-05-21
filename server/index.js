@@ -8,7 +8,7 @@ var multer = require('multer')
 var upload = multer({dest:'temp/csv/'})
 var process = require('../DataProcessing/ProcessCSV.js')
 var Geocoding = require('../DataProcessing/GeocodeService')
-var auth = require('./Auth.js')
+var auth = require('./auth.js')
 
 app.use(express.static(path.join(__dirname, './../client/dist')))
 app.use(cors())
