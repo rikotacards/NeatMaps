@@ -8,7 +8,7 @@
   "main": "client/src/index.js",
   "scripts": {
     "test": "jest",
-    "build": "webpack -d --watch",
+    "build": "webpack",
     "start": "nodemon server/index.js"
   },
   "jest": {
