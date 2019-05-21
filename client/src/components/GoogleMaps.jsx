@@ -14,7 +14,7 @@ class GoogleMaps extends React.Component{
     }
     return(
         <div style={{height:'70vh', width:'80%'}}>
-          <GoogleMapReact bootstrapURLKeys={{key:API_KEY.key}} center={defaultPosition} defaultZoom={12}>
+          <GoogleMapReact bootstrapURLKeys='' center={defaultPosition} defaultZoom={12}>
             {this.props.locationData &&this.props.locationData.map((places,index)=>
             <Marker key={index} colorCode={places.colorcode} lat={places.coordinates.lat} lng={places.coordinates.lng}
               text={places.CATEGORY} />
