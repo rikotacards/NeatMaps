@@ -1,3 +1,4 @@
+//Example of processed csv data that was used for testing axios call
 var dataFromCSV1 = {data:[[ { CATEGORY: 'one-family dwelling',
 STATE: 'CA',
 CITY: 'Foster City',
