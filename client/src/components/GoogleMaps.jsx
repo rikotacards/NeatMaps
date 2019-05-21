@@ -8,7 +8,7 @@ class GoogleMaps extends React.Component{
     super(props)
   }
   render(){
-    var defaultPosition = {lat:40, lng:-122}
+    var defaultPosition = {lat:22.27583, lng:114.154832}
     if(this.props.locationData){
       defaultPosition = this.props.locationData[0].coordinates
     }
