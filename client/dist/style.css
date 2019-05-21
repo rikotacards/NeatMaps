@@ -142,6 +142,8 @@ select{
   border: 0px solid grey;
   background: lightgrey;
   margin-bottom: 15px;
+  margin-top:5px;
+  padding:10px;
 }
 .confirmMapping:hover{
   background: darkgrey;
