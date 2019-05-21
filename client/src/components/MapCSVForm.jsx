@@ -18,7 +18,6 @@ class MapCSVForm extends React.Component{
       ],
       headerData:null,
       data:[],
-      // ProcessedData.dataFromCSV1,
       mapConfirmed:false,
       loading:false,
     }
@@ -85,27 +84,53 @@ class MapCSVForm extends React.Component{
       pStyle = {color:'black'}
     }
 
+    var displayOriginal = []
+    if(this.props.originalData){
+    for(var i =0; i<4; i++){
+      displayOriginal.push(this.props.originalData[i])
+    }
+  }
+
     return(
-      <span >
-        <div id ='mapFormContainer' style={{'display':'none'}}>
-        <p style={pStyle}>Assign column mapping</p>
-        <form  id = 'col-map-form' name = 'mapForm' onSubmit = {this.handleSubmit}>
-        <div className ='headermap'>
-          {this.state.options.map((i,index) =>
-            <div style = {pStyle} className ={'label column' + (index+1) } key = {index}>
-              column {index +1}
-              <div className = {' select selector'+(index+1)}>
-                <select  disabled = {!this.props.uploadStatus}name = {index}>
-                    {this.state.options.map((i,index)=>
-                      <option key = {index} value = {i}>{i}</option>)}
-                </select>
+      <span>
+        <div id='mapFormContainer' style={{'display':'none'}}>
+          <p style={pStyle}>Assign column mapping </p>
+          < p className='preview-disclaimer'>*Below is a preview of your original data</p>
+            <form id='col-map-form' name='mapForm' onSubmit={this.handleSubmit}>
+              <div className='headermap'>
+                {this.state.options.map((i,index) =>
+                <div style={pStyle} className={'label column' + (index+1) } key={index}>
+                  column {index +1}
+                  <div className={' select selector'+(index+1)}>
+                    <select disabled={!this.props.uploadStatus}name={index}>
+                      {this.state.options.map((i,index)=>
+                      <option key={index} value={i}>{i}</option>)}
+                    </select>
+
+                  </div>
+                </div>)}
               </div>
-            </div>)}
+              <div className='table-wrapper'>
+                <table className='preview-table'>
+                  <tbody>
+                    {displayOriginal.map((rows,index)=>
+                    <tr key={index}>
+                      <td>{rows.col1}</td>
+                      <td>{rows.col2}</td>
+                      <td>{rows.col3}</td>
+                      <td>{rows.col4}</td>
+                      <td>{rows.col5}</td>
+                    </tr>)}
+                  </tbody>
+                </table>
+              </div>
+
+            <div className='column-mapping-load'>
+              {this.state.loading ? 'loading...' : null }
             </div>
 
-            <div>{this.state.loading ? 'loading...' : null }</div>
-
-            <button className = 'confirmMapping' disabled ={!this.props.uploadStatus === !this.state.mapConfirmed} type = 'submit'>{this.state.mapConfirmed ? 'done' : 'Confirm mapping'}</button>
+            <button className='confirmMapping' disabled={!this.props.uploadStatus===!this.state.mapConfirmed}
+              type='submit'>{this.state.mapConfirmed ? 'done' : 'Confirm mapping'}</button>
 
 
         </form>
