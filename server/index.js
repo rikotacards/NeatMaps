@@ -1,14 +1,18 @@
+require('dotenv').config({path:__dirname +'/../.env'})
+console.log('test',__dirname + '/../.env')
 var express = require('express');
 var cors = require('cors')
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser')
-var port = process.env.PORT || 3000;
+
 var multer = require('multer')
 var upload = multer({dest:'temp/csv/'})
 var process = require('../DataProcessing/ProcessCSV.js')
 var Geocoding = require('../DataProcessing/GeocodeService')
 var auth = require('./auth.js')
+
+var PORT = 8080
 
 app.use(express.static(path.join(__dirname, './../client/dist')))
 app.use(cors())
@@ -66,10 +70,10 @@ app.post('/authenticate',async(req,res) =>{
   }
 })
 
-app.listen(port,(err,result) => {
+app.listen(PORT,(err,result) => {
   if(err){
-    console.log(err)
+    console.log('here', err)
   } else {
-    console.log(`server listening on ${port}`)
+    console.log(`server listening ${PORT}`)
   }
 })
