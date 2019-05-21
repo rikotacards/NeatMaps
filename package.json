@@ -2,7 +2,10 @@
   "name": "neatmaps",
   "version": "1.0.0",
   "description": "Neat Maps",
-  "main": "client/src/index.jsx",
+  "engines": {
+    "node": ">=6.13.0"
+  },
+  "main": "client/src/index.js",
   "scripts": {
     "test": "jest",
     "build": "webpack -d --watch",
