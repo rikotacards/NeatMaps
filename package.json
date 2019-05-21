@@ -2,14 +2,11 @@
   "name": "neatmaps",
   "version": "1.0.0",
   "description": "Neat Maps",
-  "engines": {
-    "node": ">=6.13.0"
-  },
   "main": "client/src/index.js",
   "scripts": {
     "test": "jest",
-    "build": "webpack",
-    "start": "node server/index.js"
+    "build": "webpack --watch",
+    "start": "nodemon server/index.js"
   },
   "jest": {
     "setupFilesAfterEnv": [

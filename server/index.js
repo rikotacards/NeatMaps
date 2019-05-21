@@ -1,5 +1,5 @@
-require('dotenv').config({path:__dirname +'/../.env'})
-console.log('test',__dirname + '/../.env')
+// require('dotenv').config({path:__dirname +'/../.env'})
+// console.log(process.env.port)
 var express = require('express');
 var cors = require('cors')
 var app = express();
@@ -8,11 +8,11 @@ var bodyParser = require('body-parser')
 
 var multer = require('multer')
 var upload = multer({dest:'temp/csv/'})
-var process = require('../DataProcessing/ProcessCSV.js')
+var processData = require('../DataProcessing/ProcessCSV.js')
 var Geocoding = require('../DataProcessing/GeocodeService')
 var auth = require('./auth.js')
 
-var PORT = 8080
+const PORT = process.env.PORT || 8080
 
 app.use(express.static(path.join(__dirname, './../client/dist')))
 app.use(cors())
@@ -30,7 +30,7 @@ app.post('/uploadcsv',upload.single('file'), async(req,res) => {
   filePath = req.file.path
 
   //new section, trying to create data preview
-  var originalData = await process.returnOriginalData(filePath)
+  var originalData = await processData.returnOriginalData(filePath)
   var returnObject = {fileName: fileName, originalData: originalData}
 
 
@@ -41,7 +41,7 @@ app.post('/mapdata', upload.none(), async(req,res) => {
   try{
 
     var headerMapping = req.body
-    var data = await process.mapHeader(headerMapping, filePath)
+    var data = await processData.mapHeader(headerMapping, filePath)
     var dataWithCoordinates = await Geocoding.convertToGeocode(data)
 
     res.status(200).json(dataWithCoordinates)
