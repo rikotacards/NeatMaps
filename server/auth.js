@@ -1,24 +1,21 @@
-var axios = require('axios')
+const axios = require('axios');
 
+const auth = async (email, password) => {
+  try {
+    const path = 'http://neat-mvp-api.herokuapp.com/v1/auth';
 
-var auth = async(email, password) => {
-  try{
-
-
-    var path = "http://neat-mvp-api.herokuapp.com/v1/auth"
-
-    var result = await axios({
+    const result = await axios({
       url: path,
-      method:'POST',
-      data:`email=${email}&password=${password}`})
+      method: 'POST',
+      data: `email=${email}&password=${password}`,
+    });
 
-      return result.data
-  } catch(error){
-
-    return error
+    return result.data;
+  } catch (error) {
+    return error;
   }
-}
+};
 
 module.exports = {
-  auth:auth
-}
+  auth,
+};

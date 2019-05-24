@@ -1,28 +1,34 @@
 import GoogleMapReact from 'google-map-react';
-import React from 'react'
-import API_KEY from '../../../GoogleMaps.config.js'
-import Marker from './Marker.jsx'
+import React from 'react';
+import Marker from './Marker.jsx';
 
-class GoogleMaps extends React.Component{
-  constructor(props){
-    super(props)
+// eslint-disable-next-line react/prop-types
+const GoogleMaps = ({ locationData }) => {
+  let defaultPosition = { lat: 22.27583, lng: 114.154832 };
+  if (locationData) {
+    defaultPosition = locationData[0].coordinates;
   }
-  render(){
-    var defaultPosition = {lat:22.27583, lng:114.154832}
-    if(this.props.locationData){
-      defaultPosition = this.props.locationData[0].coordinates
-    }
-    return(
-        <div style={{height:'70vh', width:'80%'}}>
-          <GoogleMapReact bootstrapURLKeys='' center={defaultPosition} defaultZoom={12}>
-            {this.props.locationData &&this.props.locationData.map((places,index)=>
-            <Marker key={index} colorCode={places.colorcode} lat={places.coordinates.lat} lng={places.coordinates.lng}
-              text={places.CATEGORY} />
-            )}
-          </GoogleMapReact>
-        </div>
-    )
-  }
-}
+  return (
+    <div style={{ height: '70vh', width: '80%' }}>
+      <GoogleMapReact
+        bootstrapURLKeys=""
+        center={defaultPosition}
+        defaultZoom={12}
+      >
+        {locationData
+          && locationData.map((places, index) => (
+            <Marker
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
+              colorCode={places.colorcode}
+              lat={places.coordinates.lat}
+              lng={places.coordinates.lng}
+              text={places.CATEGORY}
+            />
+          ))}
+      </GoogleMapReact>
+    </div>
+  );
+};
 
-export default GoogleMaps
+export default GoogleMaps;

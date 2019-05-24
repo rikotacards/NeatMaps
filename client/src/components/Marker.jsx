@@ -1,22 +1,22 @@
 import React from 'react';
-//import Marker from 'google-map-react';
 
-var Marker = (props) => {
-  var divStyle = {
+// eslint-disable-next-line react/prop-types
+const Marker = ({ colorCode, text }) => {
+  const divStyle = {
     color: 'white',
-    background: `#${props.colorCode}`,
+    background: `#${colorCode}`,
     padding: '10px 5px',
     display: 'inline-flex',
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize:'10px',
-  }
-  return(
+    fontSize: '10px',
+  };
+  return (
     <div style={divStyle}>
-      {props.text}
+      {text}
     </div>
-  )
-}
+  );
+};
 
-export default Marker
+export default Marker;

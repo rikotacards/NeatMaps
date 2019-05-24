@@ -1,156 +1,181 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import axios from 'axios';
 import RecentlySaved from './RecentlySaved.jsx';
-import ProcessedData from '../../../ProcessedDataCSV1';
 
-//location data is taken processed data in ProcessedDataCSV1.js to prevent recurring API requests (which will increase in cost)
-
-class MapCSVForm extends React.Component{
-  constructor(props){
-    super(props)
+class MapCSVForm extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       options: [
         'ADDRESS',
         'CITY',
         'STATE',
         'ZIPCODE',
-        'CATEGORY'
+        'CATEGORY',
       ],
-      headerData:null,
-      data:[],
-      mapConfirmed:false,
-      loading:false,
-    }
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.resetMapConfirmed = this.resetMapConfirmed.bind(this)
+      data: [],
+      mapConfirmed: false,
+      loading: false,
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.resetMapConfirmed = this.resetMapConfirmed.bind(this);
   }
 
-  resetMapConfirmed(){
+  resetMapConfirmed() {
     this.setState({
-      mapConfirmed:false
-    })
+      mapConfirmed: false,
+    });
   }
 
-  handleSubmit(e){
+  handleSubmit(e) {
+    const { filePath, resetState } = this.props;
+    const { data } = this.state;
     e.preventDefault();
-    var form = e.target;
-    var data = new FormData(form)
-    data.append('file',this.props.filePath)
+    const form = e.target;
+    const dataUpload = new FormData(form);
+    dataUpload.append('file', filePath);
 
     this.setState({
-      loading:true
-    })
+      loading: true,
+    });
 
     axios({
-      url:'/mapdata',
-      method:'post',
-      data:data
+      url: '/mapdata',
+      method: 'post',
+      data: dataUpload,
     })
-    .then((res)=> {
-      this.setState({
-        data: [...this.state.data, ...[res.data]],
-        mapConfirmed:true,
-        loading:false
-      },()=>{console.log('from Mapcsv form ', this.state.data)})
-    })
-    .then(()=>{
-      if(this.state.data.length>3){
-        var newstate = this.state.data;
-        newstate.shift()
+      .then((res) => {
         this.setState({
-          data: newstate
-        })
+          data: [...data, ...[res.data]],
+          mapConfirmed: true,
+          loading: false,
+        });
+      })
+      .then(() => {
+        if (data.length > 3) {
+          const newstate = data;
+          newstate.shift();
+          this.setState({
+            data: newstate,
+          });
+        }
+      })
+      .then(() => {
+        document.getElementById('uploadform').style.display = 'none';
+
+        document.getElementById('mapFormContainer').style.display = 'none';
+      })
+      .then(() => {
+        resetState();
+        this.resetMapConfirmed();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+
+  render() {
+    let pStyle = { color: 'lightgray' };
+    const {
+      uploadStatus, originalData, fileName, resetState,
+    } = this.props;
+    const {
+      options, mapConfirmed, loading, data,
+    } = this.state;
+    if (uploadStatus) {
+      pStyle = { color: 'black' };
+    }
+
+    const displayOriginal = [];
+    if (originalData) {
+      for (let i = 0; i < 4; i += 1) {
+        displayOriginal.push(originalData[i]);
       }
-    })
-    .then(()=>{
-      document.getElementById('uploadform').style.display='none'
-
-      document.getElementById('mapFormContainer').style.display = 'none'
-    })
-    .then(()=>{
-      this.props.resetState();
-      this.resetMapConfirmed()
-    })
-    .catch((error) =>{
-      console.log(error)
-    })
-  }
-
-
-  render(){
-
-    var pStyle = {color:'lightgray'}
-    if(this.props.uploadStatus){
-      pStyle = {color:'black'}
     }
 
-    var displayOriginal = []
-    if(this.props.originalData){
-    for(var i =0; i<4; i++){
-      displayOriginal.push(this.props.originalData[i])
-    }
-  }
-
-    return(
+    return (
       <span>
-        <div id='mapFormContainer' style={{'display':'none'}}>
+        <div id="mapFormContainer" style={{ display: 'none' }}>
           <p style={pStyle}>Assign column mapping </p>
-          < p className='preview-disclaimer'>*Below is a preview of your original data</p>
-            <form id='col-map-form' name='mapForm' onSubmit={this.handleSubmit}>
-              <div className='headermap'>
-                {this.state.options.map((i,index) =>
-                <div style={pStyle} className={'label column' + (index+1) } key={index}>
-                  column {index +1}
-                  <div className={' select selector'+(index+1)}>
-                    <select disabled={!this.props.uploadStatus}name={index}>
-                      {this.state.options.map((i,index)=>
-                      <option key={index} value={i}>{i}</option>)}
+          <p className="preview-disclaimer">
+            *Below is a preview of your original data
+          </p>
+          <form
+            id="col-map-form"
+            name="mapForm"
+            onSubmit={this.handleSubmit}
+          >
+            <div className="headermap">
+              {options.map((i, index) => (
+                <div
+                  style={pStyle}
+                  className={`label column${index + 1}`}
+                  key={index}
+                >
+                  column
+                  {index + 1}
+                  <div className={` select selector${index + 1}`}>
+                    <select
+                      disabled={!uploadStatus}
+                      name={index}
+                    >
+                      {options.map((ops, idx) => (
+                        <option key={idx} value={ops}>
+                          {ops}
+                        </option>
+                      ))}
                     </select>
-
                   </div>
-                </div>)}
-              </div>
-              <div className='table-wrapper'>
-                <table className='preview-table'>
-                  <tbody>
-                    {displayOriginal.map((rows,index)=>
+                </div>
+              ))}
+            </div>
+            <div className="table-wrapper">
+              <table className="preview-table">
+                <tbody>
+                  {displayOriginal.map((rows, index) => (
                     <tr key={index}>
                       <td>{rows.col1}</td>
                       <td>{rows.col2}</td>
                       <td>{rows.col3}</td>
                       <td>{rows.col4}</td>
                       <td>{rows.col5}</td>
-                    </tr>)}
-                  </tbody>
-                </table>
-              </div>
-
-            <div className='column-mapping-load'>
-              {this.state.loading ? 'loading...' : null }
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
 
-            <button className='confirmMapping' disabled={!this.props.uploadStatus===!this.state.mapConfirmed}
-              type='submit'>{this.state.mapConfirmed ? 'done' : 'Confirm mapping'}</button>
+            <div className="column-mapping-load">
+              {loading ? 'loading...' : null}
+            </div>
 
-
-        </form>
+            <button
+              className="confirmMapping"
+              disabled={
+                !uploadStatus === !mapConfirmed
+              }
+              type="submit"
+            >
+              {mapConfirmed ? 'done' : 'Confirm mapping'}
+            </button>
+          </form>
         </div>
 
         <p> Add data to map</p>
 
         <RecentlySaved
-          fileName = {this.props.fileName}
-          mapConfirmed = {this.state.mapConfirmed}
-          locationData = {this.state.data}
-          resetState = {this.props.resetState}
-          resetMapConfirmed = {this.resetMapConfirmed}
+          fileName={fileName}
+          mapConfirmed={mapConfirmed}
+          locationData={data}
+          resetState={resetState}
+          resetMapConfirmed={this.resetMapConfirmed}
         />
-
-
-
       </span>
-    )
+    );
   }
 }
 
-export default MapCSVForm
+export default MapCSVForm;
